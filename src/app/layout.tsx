@@ -3,9 +3,34 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tejasnls.dev"),
   title: "Senior Frontend Engineer | N L Subramanya Tejas",
   description:
     "Senior frontend systems engineer with 5+ years in enterprise architecture, micro-frontends, performance optimization, analytics correctness, and production reliability.",
+  openGraph: {
+    title: "Senior Frontend Engineer | N L Subramanya Tejas",
+    description:
+      "Senior frontend systems engineer with 5+ years in enterprise architecture, micro-frontends, performance optimization, analytics correctness, and production reliability.",
+    url: "https://tejasnls.dev",
+    siteName: "N L Subramanya Tejas – Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Senior Frontend Engineer – N L Subramanya Tejas",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Senior Frontend Engineer | N L Subramanya Tejas",
+    description:
+      "Senior frontend systems engineer with 5+ years in enterprise architecture, micro-frontends, performance optimization, analytics correctness, and production reliability.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
