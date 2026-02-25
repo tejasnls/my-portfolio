@@ -13,14 +13,7 @@ export const metadata: Metadata = {
       "Senior frontend systems engineer with 5+ years in enterprise architecture, micro-frontends, performance optimization, analytics correctness, and production reliability.",
     url: "https://tejasnls.dev",
     siteName: "N L Subramanya Tejas – Portfolio",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Senior Frontend Engineer – N L Subramanya Tejas",
-      },
-    ],
+    images: ["https://tejasnls.dev/og-image.png"],
     locale: "en_US",
     type: "website",
   },
@@ -29,7 +22,7 @@ export const metadata: Metadata = {
     title: "Senior Frontend Engineer | N L Subramanya Tejas",
     description:
       "Senior frontend systems engineer with 5+ years in enterprise architecture, micro-frontends, performance optimization, analytics correctness, and production reliability.",
-    images: ["/og-image.png"],
+    images: ["https://tejasnls.dev/og-image.png"],
   },
 };
 
@@ -44,6 +37,11 @@ export default function RootLayout({
         <link
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@700,800&display=swap"
+        />
+        <meta
+          name="image"
+          property="og:image"
+          content="https://tejasnls.dev/og-image.png"
         />
         <script
           dangerouslySetInnerHTML={{
