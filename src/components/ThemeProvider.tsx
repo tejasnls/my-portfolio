@@ -20,7 +20,12 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme") as Theme | null;
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem("theme");
+    } catch {
+      stored = null;
+    }
     if (stored === "light" || stored === "dark") {
       setTheme(stored);
       document.documentElement.classList.toggle("light-theme", stored === "light");
@@ -33,8 +38,13 @@ export function ThemeProvider({
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
-    localStorage.setItem("theme", next);
     document.documentElement.classList.toggle("light-theme", next === "light");
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // Storage unavailable (private mode, disabled) — the toggle still
+      // works for this session; it just won't be remembered.
+    }
   };
 
   return (

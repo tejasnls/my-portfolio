@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="py-6 sm:py-8 border-t border-[color:var(--border-subtle)]">
+    <footer className="pt-6 sm:pt-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] border-t border-[color:var(--border-subtle)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[color:var(--text-secondary)]">
         <div>
           © {new Date().getFullYear()} N L Subramanya Tejas. Senior Frontend Engineer.

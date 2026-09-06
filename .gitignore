@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# product & design docs (kept local — sole contributor)
+/DESIGN.md
+/PRODUCT.md
+/.claude/
+/.impeccable/

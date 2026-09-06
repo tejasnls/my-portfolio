@@ -1,31 +1,72 @@
 @import "tailwindcss";
 
+/* ============================================================
+   The Control Room — tokens
+   Dark: an instrument console lit from above, on a drafting grid.
+   Light: architect's paper — tinted vellum with white drawings.
+   ============================================================ */
+
 :root {
   --bg-primary: #0b0d10;
-  --bg-secondary: #12161b;
+  --surface-1: #14181f; /* card face */
+  --surface-2: #1a1f28; /* nested: metric, callout, code panel */
+  --bg-secondary: var(--surface-1); /* legacy alias */
+
   --text-primary: #e9edf2;
-  --text-secondary: #9ca9b8;
-  --accent: #3b82f6;
-  --background: #0b0d10;
-  --foreground: #e9edf2;
-  --border-subtle: rgba(255, 255, 255, 0.12);
-  --border-subtle-hover: rgba(255, 255, 255, 0.24);
-  --code-bg: rgba(0, 0, 0, 0.35);
-  --code-border: rgba(255, 255, 255, 0.1);
+  --text-secondary: #9aa7b6;
+
+  --accent: #3b82f6; /* the signal hue + structural marks */
+  --accent-strong: #2563eb; /* primary-button fill (top of gradient) */
+  --accent-deep: #1e40af; /* primary-button fill (bottom of gradient) */
+  --on-accent: #ffffff;
+  --accent-wash: rgba(59, 130, 246, 0.09); /* faint blue field */
+  --accent-line: rgba(96, 165, 250, 0.32); /* blueprint rule / tinted hairline */
+
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-subtle-hover: rgba(255, 255, 255, 0.22);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --edge-highlight: rgba(255, 255, 255, 0.06); /* top-edge catch-light */
+
+  --code-bg: #0c1219;
+  --code-border: rgba(96, 165, 250, 0.18);
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35),
+    0 18px 44px -18px rgba(0, 0, 0, 0.72);
+  --shadow-btn: 0 2px 4px rgba(0, 0, 0, 0.4),
+    0 12px 26px -8px rgba(37, 99, 235, 0.4);
+
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
 }
 
 .light-theme {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #eef2f7;
+  --bg-primary: #f2f5fa; /* tinted paper, faint blue-grey undertone */
+  --surface-1: #ffffff; /* the drawing */
+  --surface-2: #f5f8fc;
+  --bg-secondary: var(--surface-1);
+
   --text-primary: #0f172a;
   --text-secondary: #475569;
+
   --accent: #2563eb;
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --border-subtle: rgba(15, 23, 42, 0.14);
-  --border-subtle-hover: rgba(15, 23, 42, 0.25);
-  --code-bg: rgba(15, 23, 42, 0.05);
-  --code-border: rgba(15, 23, 42, 0.12);
+  --accent-strong: #1d4ed8;
+  --accent-deep: #1e3a8a;
+  --on-accent: #ffffff;
+  --accent-wash: rgba(37, 99, 235, 0.05);
+  --accent-line: rgba(37, 99, 235, 0.26);
+
+  --border-subtle: rgba(15, 23, 42, 0.09);
+  --border-subtle-hover: rgba(15, 23, 42, 0.2);
+  --border-strong: rgba(15, 23, 42, 0.14);
+  --edge-highlight: rgba(255, 255, 255, 0.85);
+
+  --code-bg: #eef3fb; /* blueprint-tinted paper panel */
+  --code-border: rgba(37, 99, 235, 0.16);
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 18px 44px -18px rgba(15, 23, 42, 0.16);
+  --shadow-btn: 0 2px 4px rgba(15, 23, 42, 0.12),
+    0 12px 28px -8px rgba(29, 78, 216, 0.35);
 }
 
 @theme inline {
@@ -36,7 +77,17 @@
 }
 
 body {
-  background: var(--bg-primary);
+  background-color: var(--bg-primary);
+  /* Establishing light: a soft accent-tinted glow off the top edge, behind
+     the hero, that scrolls away. Materiality, not decoration. */
+  background-image: radial-gradient(
+    130% 52% at 50% 0%,
+    var(--accent-wash),
+    transparent 55%
+  );
+  background-size: 100% 780px;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
   color: var(--text-primary);
   font-family: "Satoshi", system-ui, sans-serif;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -53,43 +104,180 @@ h3 {
   font-family: "Cabinet Grotesk", system-ui, sans-serif;
 }
 
+:where(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
+}
+
+/* ---- Surfaces ---------------------------------------------- */
+
 .glass-card {
-  background: var(--bg-secondary);
+  background-color: var(--surface-1);
   border: 1px solid var(--border-subtle);
+  box-shadow: inset 0 1px 0 var(--edge-highlight), var(--shadow-card);
+}
+
+/* Flagship case study: accent-tinted edge + a blue field in the top-left
+   corner, marking it as the primary artifact. */
+.card-lead {
+  border-color: var(--accent-line);
+  background-image: radial-gradient(
+    150% 90% at 0% 0%,
+    var(--accent-wash),
+    transparent 42%
+  );
 }
 
 .nav-blur {
-  backdrop-filter: blur(8px);
-  background-color: color-mix(in srgb, var(--bg-primary) 92%, transparent);
-}
-
-.border-subtle {
-  border-color: var(--border-subtle);
-}
-
-.border-subtle:hover {
-  border-color: var(--border-subtle-hover);
+  backdrop-filter: blur(10px);
+  background-color: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+  border-bottom-color: var(--border-strong);
 }
 
 .code-block {
-  background: var(--code-bg);
+  background-color: var(--code-bg);
+  background-image: linear-gradient(
+    180deg,
+    var(--accent-wash),
+    transparent 45%
+  );
   border: 1px solid var(--code-border);
 }
 
-html {
-  scroll-behavior: smooth;
+/* ---- Blueprint rule (dimension line) --------------------- */
+
+.rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-line) 12%,
+    var(--accent-line) 88%,
+    transparent
+  );
 }
 
-@keyframes bounce-subtle {
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) translateY(6px);
+/* ---- Eyebrow with register-mark tick --------------------- */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-secondary);
+}
+
+.eyebrow::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.875rem;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* ---- Buttons -------------------------------------------------
+   Primary reads as a lit console key: a vertical accent gradient,
+   a top catch-light, and a soft accent-tinted cast shadow.
+   ----------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, filter 0.15s ease, transform 0.06s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  color: var(--on-accent);
+  background-color: var(--accent-strong);
+  background-image: linear-gradient(
+    180deg,
+    var(--accent-strong),
+    var(--accent-deep)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 1px 2px rgba(15, 23, 42, 0.3), var(--shadow-btn);
+}
+
+.btn-primary:hover {
+  background-image: linear-gradient(
+    180deg,
+    var(--accent),
+    var(--accent-strong)
+  );
+  filter: brightness(1.05);
+}
+
+.btn-primary:active {
+  box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.3);
+}
+
+.btn-secondary {
+  color: var(--text-primary);
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 0 1px 0 var(--edge-highlight);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-line);
+  background-color: color-mix(
+    in srgb,
+    var(--surface-2) 90%,
+    var(--accent) 10%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
   }
 }
 
-.animate-bounce-subtle {
-  animation: bounce-subtle 2s ease-in-out infinite;
+/* ---- Skip link ------------------------------------------- */
+
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  margin: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 8px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+section[id],
+article[id] {
+  scroll-margin-top: 5.5rem;
 }
