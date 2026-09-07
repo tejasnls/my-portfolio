@@ -16,11 +16,9 @@ export function Nav() {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!menuOpen) return;
-    firstLinkRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMenuOpen(false);
@@ -109,10 +107,9 @@ export function Nav() {
             className="relative z-50 md:hidden border-t border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] shadow-[var(--shadow-card)] px-4 sm:px-6"
           >
             <ul className="flex flex-col py-1">
-              {LINKS.map((link, index) => (
+              {LINKS.map((link) => (
                 <li key={link.href}>
                   <a
-                    ref={index === 0 ? firstLinkRef : undefined}
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
                     className="block py-3 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
